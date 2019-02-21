@@ -17,55 +17,31 @@ to integrate them into a Sinatra project.
 How does AirBnB create a separate url for every property it hosts on its site?
 Would it make sense to hard-code hundreds of thousands of routes (
 `get '/property1'`, `get '/property2'`,`get '/property2356'`) in the controller
-to display each rental property? The controller would get messy and long very
-quickly. Instead, AirBnB (and Twitter, and Facebook, etc) use _dynamic routes_ -
-routes that are created based on attributes within the url of the request. In
-this code-along we'll learn why dynamic routes are powerful and how to integrate
-them into a Sinatra project.
+to display each rental property? The controller would get messy and long very quickly. Instead, AirBnB (and Twitter, and Facebook, etc) use _dynamic routes_ - routes that are created based on attributes within the url of the request.
+In this code-along we'll learn why dynamic routes are powerful and how to integrate them into a Sinatra project.
 
-To code along, fork and clone this lab. Run `bundle install` to make sure all of
-your dependencies are installed. Run `shotgun` to make sure that your
-application can run. There are tests, so make sure you're running `learn`
-periodically to make sure your code is behaving as expected.
+To code along, fork and clone this lab. Run `bundle install` to make sure all of your dependencies are installed. Run `shotgun` to make sure that your application can run. There are tests, so make sure you're running `learn` periodically to make sure your code is behaving as expected.
 
 ### Starter Code
 
-Open up `app.rb` in your text editor. You'll notice two routes, `get '/hello'`
-and `get '/hello/:name'`.
+Open up `app.rb` in your text editor. You'll notice two routes, `get '/hello'` and `get '/hello/:name'`.
 
-The first route is familiar looking to us. It returns the string "hello world"
-in the browser when we go to the url. This is an example of static routing,
-which we've seen.
+The first route is familiar looking to us. It returns the string "hello world" in the browser when we go to the url. This is an example of static routing, which we've seen.
 
-But `get '/hello/:name'` is very different. What's with that `:` in front of
-`name`? This is an example of a `dynamic route`.
+But `get '/hello/:name'` is very different. What's with that `:` in front of `name`? This is an example of a `dynamic route`.
 
-Eventually we are going to need to capture data from the user. We need to know
-who they want to say hello to. There are a few ways to get this information, and
-the easiest is built right into the URL. They are already typing that URL into
-the box at the top of their browser, so let's use it to get a bit more
-information.
+Eventually we are going to need to capture data from the user. We need to know who they want to say hello to. There are a few ways to get this information, and the easiest is built right into the URL. They are already typing that URL into the box at the top of their browser, so let's use it to get a bit more information.
 
 ## Dynamic Routes
 
-In your browser, head to `http://localhost:9393/hello/danny`. Now go to
-`http://localhost:9393/hello/victoria` and `http://localhost:9393/hello/lyel`.
-Notice how the content on the page changes depending on what we type as the URL
-in the browser. This is the beauty of dynamic routing - it allows us to take
-input straight from the url, instead of through a form. In doing so, we can
-modify the content of a view at the moment the `get` request is received by the
-controller.
+In your browser, head to `http://localhost:9393/hello/danny`. Now go to `http://localhost:9393/hello/victoria` and `http://localhost:9393/hello/lyel`.
+Notice how the content on the page changes depending on what we type as the URL in the browser. This is the beauty of dynamic routing - it allows us to take input straight from the url, instead of through a form. In doing so, we can modify the content of a view at the moment the `get` request is received by the controller.
 
 ### How Dynamic Routes Work:
 
-It's important to note that in Sinatra a route is simply an HTTP method/verb
-that is paired with a URL-matching pattern. When your Sinatra application
-receives a request, it will match that route to a specific controller action
-that matches that URL pattern.
+It's important to note that in Sinatra a route is simply an HTTP method/verb that is paired with a URL-matching pattern. When your Sinatra application receives a request, it will match that route to a specific controller action that matches that URL pattern.
 
-The best way to explain routes is by going through an example. Our application
-is a medicine application that has an array containing three instances of a
-Medicine class.
+The best way to explain routes is by going through an example. Our application is a medicine application that has an array containing three instances of a Medicine class.
 
 Here's our array:
 
@@ -79,11 +55,7 @@ all_the_medicines = [
 
 Our application gets a request :`GET /medicines/1`. What happens here?
 
-The first thing Sinatra does is try to match the request to a specific
-controller action. The controller action it would match is as follows:
-`get '/medicines/:id'`. Once the request has been matched to the controller
-action, it then executes the code inside of the controller action block, as
-shown below:
+The first thing Sinatra does is try to match the request to a specific controller action. The controller action it would match is as follows: `get '/medicines/:id'`. Once the request has been matched to the controller action, it then executes the code inside of the controller action block, as shown below:
 
 ```ruby
 # medicines_controller.rb
@@ -95,11 +67,7 @@ get '/medicines/:id' do
 end
 ```
 
-Let's run through this specific scenario. The HTTP request verb, `GET` matches
-the `get` method in our controller. The `/medicines` path in the HTTP request
-matches the `/medicines` path in our controller method. Finally, the `1`, which
-is an `id` parameter that's being passed into the path, matches the controller's
-expectation for an `id` parameter to be passed in place of `:id`.
+Let's run through this specific scenario. The HTTP request verb, `GET` matches the `get` method in our controller. The `/medicines` path in the HTTP request matches the `/medicines` path in our controller method. Finally, the `1`, which is an `id` parameter that's being passed into the path, matches the controller's expectation for an `id` parameter to be passed in place of `:id`.
 
 ### URL Params
 
